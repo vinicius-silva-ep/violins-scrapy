@@ -11,7 +11,7 @@ DB_CONFIG = {
 }
 
 
-# Custom class to send logs to the PostgreSQL database
+# Custom class to send logs to the PostgreSQL database.
 class DBHandler(logging.Handler):
     def __init__(self, db_config):
         super().__init__()
