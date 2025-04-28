@@ -2,10 +2,13 @@ import psycopg2
 import sys
 import os
 
-
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from config import DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD
 
+from config import DB_HOST, DB_PORT, DB_NAME, DB_USER, DB_PASSWORD
+from logger import setup_logger
+
+# Initialize the logger
+logger = setup_logger()
 
 base_path = os.path.abspath(os.path.dirname(__file__))
 db_path = os.path.join(base_path, "db")
@@ -24,6 +27,11 @@ create_table = os.path.join(db_path, "create_table.sql")
 
 def db_operations():
     try:
+        logger.info(
+            "Connecting to the database...",
+            extra={"table": "violins", "step": "db_check"},
+        )
+
         connection = psycopg2.connect(
             host=DB_HOST,
             port=DB_PORT,
@@ -31,24 +39,49 @@ def db_operations():
             user=DB_USER,
             password=DB_PASSWORD,
         )
-
-        print("Connection to the database successfully established!")
         cursor = connection.cursor()
+
+        logger.info(
+            "Connection to the database successfully established!",
+            extra={"table": "violins", "step": "db_check"},
+        )
 
         cursor.execute(read_sql_file(verify_schema))
         if not cursor.fetchone():
+            logger.info(
+                "Schema 'violins' not found. Creating schema...",
+                extra={"table": "violins", "step": "db_check"},
+            )
             cursor.execute(read_sql_file(create_schema))
             connection.commit()
-            print("Schema 'violins' created successfully.")
+            logger.info(
+                "Schema 'violins' created successfully.",
+                extra={"table": "violins", "step": "db_check"},
+            )
 
         cursor.execute(read_sql_file(verify_table))
         if not cursor.fetchone()[0]:
+            logger.info(
+                "Table 'violins_data' not found. Creating table...",
+                extra={"table": "violins", "step": "db_check"},
+            )
             cursor.execute(read_sql_file(create_table))
             connection.commit()
-            print("Table 'violins_data' created successfully.")
+            logger.info(
+                "Table 'violins_data' created successfully.",
+                extra={"table": "violins", "step": "db_check"},
+            )
 
         cursor.close()
         connection.close()
+        logger.info(
+            "Database operations completed and connection closed.",
+            extra={"table": "violins", "step": "db_check"},
+        )
 
     except Exception as e:
-        print(f"Error connecting to database: {e}")
+        logger.error(
+            f"Error connecting to database: {e}",
+            extra={"table": "violins", "step": "db_check"},
+        )
+        raise

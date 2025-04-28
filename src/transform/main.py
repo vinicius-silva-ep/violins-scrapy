@@ -6,6 +6,10 @@ import pandas as pd
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
 
 from collect.run_spider import run_spider
+from logger import setup_logger
+
+# Initialize the logger
+logger = setup_logger()
 
 
 def extract_stock_number(stock_value: str) -> int:
@@ -29,18 +33,29 @@ def clean_numerical_columns(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def transform_data() -> pd.DataFrame:
+    try:
+        logger.info(
+            "Transforming data...",
+            extra={"table": "violins", "step": "transform"},
+        )    
 
-    data = run_spider()
+        data = run_spider()
 
-    df = pd.DataFrame(data)
-    df["date"] = datetime.now().strftime(
-        "%Y-%m-%d %H:%M:%S"
-    )  # Date format by ISO 8601 compatible with PostgreSQL
+        df = pd.DataFrame(data)
+        df["date"] = datetime.now().strftime(
+            "%Y-%m-%d %H:%M:%S"
+        )  # Date format by ISO 8601 compatible with PostgreSQL
 
-    df = clean_price(df)
-    df = clean_numerical_columns(df)
+        df = clean_price(df)
+        df = clean_numerical_columns(df)
 
-    df["stock"] = df["stock"].apply(extract_stock_number)
+        df["stock"] = df["stock"].apply(extract_stock_number)
 
-    print(df)
-    return df
+        print(df)
+        return df
+    except Exception as e:
+        logger.error(
+            f"Error during data transformation: {e}",
+            extra={"table": "violins", "step": "transform"},
+        )
+        raise    
