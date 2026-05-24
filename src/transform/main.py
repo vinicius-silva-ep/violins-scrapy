@@ -18,7 +18,12 @@ def extract_stock_number(stock_value: str) -> int:
 
 
 def clean_price(df: pd.DataFrame) -> pd.DataFrame:
-    df["price"] = df["price"].replace("[\$,]", "", regex=True).astype(float).fillna(0)
+    df["price"] = (
+        df["price"]
+        .replace(r"[\$,]", "", regex=True)
+        .pipe(pd.to_numeric, errors="coerce")
+        .fillna(0)
+    )
     return df
 
 
