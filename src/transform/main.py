@@ -13,12 +13,17 @@ logger = setup_logger()
 
 
 def extract_stock_number(stock_value: str) -> int:
-    match = pd.Series(stock_value).str.extract(r"(\d+)")
-    return match[0].fillna(0).astype(int)
+    match = pd.Series(stock_value).str.extract(r"(\d+)")[0]
+    return pd.to_numeric(match, errors="coerce").fillna(0).astype(int)
 
 
 def clean_price(df: pd.DataFrame) -> pd.DataFrame:
-    df["price"] = df["price"].replace("[\$,]", "", regex=True).astype(float).fillna(0)
+    df["price"] = (
+        df["price"]
+        .replace(r"[\$,]", "", regex=True)
+        .pipe(pd.to_numeric, errors="coerce")
+        .fillna(0)
+    )
     return df
 
 
