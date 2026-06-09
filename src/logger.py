@@ -15,20 +15,28 @@ DB_CONFIG = {
 class DBHandler(logging.Handler):
     def __init__(self, db_config):
         super().__init__()
+        self.db_config = db_config
+        self.conn = None
+        self._connect()
+
+    def _connect(self):
+        if self.conn is not None:
+            try:
+                self.conn.close()
+            except Exception:
+                pass
+
         self.conn = psycopg2.connect(
-            host=db_config["host"],
-            database=db_config["dbname"],
-            user=db_config["user"],
-            password=db_config["password"],
-            port=db_config["port"],
+            host=self.db_config["host"],
+            database=self.db_config["dbname"],
+            user=self.db_config["user"],
+            password=self.db_config["password"],
+            port=self.db_config["port"],
         )
-        self.cursor = self.conn.cursor()
+        self.conn.autocommit = True
+        self._create_table_if_needed()
 
-        # Create table if not exists
-        self.create_table()
-
-    def create_table(self):
-        """Creates the new table if not exists"""
+    def _create_table_if_needed(self):
         create_table_query = """
         CREATE TABLE IF NOT EXISTS violins.logs (
             id SERIAL PRIMARY KEY,
@@ -36,47 +44,49 @@ class DBHandler(logging.Handler):
             table_name VARCHAR(100),
             step VARCHAR(100),
             log_type VARCHAR(50),
-            message TEXT        
+            message TEXT
         );
         """
         try:
-            self.cursor.execute(create_table_query)
-            self.conn.commit()
+            with self.conn.cursor() as cursor:
+                cursor.execute(create_table_query)
         except Exception as e:
             print(f"Error while creating logs table: {e}")
 
+    def _ensure_connection(self):
+        if self.conn is None or self.conn.closed != 0:
+            self._connect()
+
     def emit(self, record):
         try:
-            # Reject DEBUG records 
             if record.levelname == "DEBUG":
                 return
 
-            # Extract the log and level message
-
+            self._ensure_connection()
             log_message = self.format(record)
             log_type = record.levelname
-
-            # Getting custom records or using default pattern            
-            table = getattr(
-                record, "table_name", "violins"
-            )
+            table = getattr(record, "table_name", "violins")
             step = getattr(record, "step", "default_step")
 
-            # Inserting log on the database
             query = """
                 INSERT INTO violins.logs (log_type, message, table_name, step)
                 VALUES (%s, %s, %s, %s)
             """
-            self.cursor.execute(query, (log_type, log_message, table, step))
-            self.conn.commit()
+            with self.conn.cursor() as cursor:
+                cursor.execute(query, (log_type, log_message, table, step))
 
         except Exception as e:
             print(f"Error while inserting into table: {e}")
 
     def close(self):
         """Closing the connection"""
-        self.cursor.close()
-        self.conn.close()
+        try:
+            if self.conn is not None:
+                self.conn.close()
+        except Exception:
+            pass
+        finally:
+            self.conn = None
         super().close()
 
 
