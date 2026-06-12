@@ -37,10 +37,19 @@ def load_and_insert_data():
 
         # Get the number of records to be inserted
         num_records = len(df)
+        logger.info(
+            f"Number of records to insert: {num_records}",
+            extra={"table": "violins", "step": "load"},
+        )
 
         # Insert the data into the database
         df.to_sql(
             "violins_data", engine, schema=postgres_schema, if_exists="append", index=False
+        )
+
+        logger.info(
+            f"Successfully inserted {num_records} records into the database",
+            extra={"table": "violins", "step": "load"},
         )
 
     except Exception as e:
