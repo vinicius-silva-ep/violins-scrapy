@@ -8,39 +8,60 @@
     </mxGraphModel>
   </diagram>
   <diagram id="ehjU50xR2jqY1u-yUrhk" name="In progress">
-    <mxGraphModel dx="1042" dy="626" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="1389" dy="835" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="wxIun4APsl8xkylaUjM0-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="wxIun4APsl8xkylaUjM0-1" target="wxIun4APsl8xkylaUjM0-2">
+        <mxCell id="dKebajm2CSqo4KKYSLMk-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="dKebajm2CSqo4KKYSLMk-2" target="dKebajm2CSqo4KKYSLMk-4">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="wxIun4APsl8xkylaUjM0-1" value="Data Load" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e51400;fontColor=#ffffff;strokeColor=#B20000;" vertex="1" parent="1">
-          <mxGeometry x="290" y="190" width="240" height="60" as="geometry" />
+        <mxCell id="dKebajm2CSqo4KKYSLMk-2" value="Data Load" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e51400;fontColor=#ffffff;strokeColor=#B20000;" vertex="1" parent="1">
+          <mxGeometry x="335" y="260" width="240" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="wxIun4APsl8xkylaUjM0-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="wxIun4APsl8xkylaUjM0-2" target="wxIun4APsl8xkylaUjM0-4">
+        <mxCell id="dKebajm2CSqo4KKYSLMk-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="dKebajm2CSqo4KKYSLMk-4" target="dKebajm2CSqo4KKYSLMk-5">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="wxIun4APsl8xkylaUjM0-2" value="Improving the logs" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#76608a;fontColor=#ffffff;strokeColor=#432D57;" vertex="1" parent="1">
-          <mxGeometry x="290" y="340" width="240" height="60" as="geometry" />
+        <mxCell id="dKebajm2CSqo4KKYSLMk-4" value="Improving the logs" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#76608a;fontColor=#ffffff;strokeColor=#432D57;" vertex="1" parent="1">
+          <mxGeometry x="335" y="410" width="240" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="wxIun4APsl8xkylaUjM0-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="wxIun4APsl8xkylaUjM0-4" target="wxIun4APsl8xkylaUjM0-6">
-          <mxGeometry relative="1" as="geometry" />
-        </mxCell>
-        <mxCell id="wxIun4APsl8xkylaUjM0-4" value="Add how many rows are being inserted on table. Now I don&#39;t have this information due to ignorance." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6d8764;fontColor=#ffffff;strokeColor=#3A5431;" vertex="1" parent="1">
-          <mxGeometry x="255" y="480" width="310" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="wxIun4APsl8xkylaUjM0-6" value="Logic was implemented on the &quot;main&quot; file on load. All I need to do is creating the image and container again." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0a30a;fontColor=#000000;strokeColor=#BD7000;" vertex="1" parent="1">
-          <mxGeometry x="230" y="610" width="360" height="60" as="geometry" />
+        <mxCell id="dKebajm2CSqo4KKYSLMk-5" value="Add how many rows are being inserted on table. Now I don&#39;t have this information due to ignorance." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6d8764;fontColor=#ffffff;strokeColor=#3A5431;" vertex="1" parent="1">
+          <mxGeometry x="300" y="550" width="310" height="60" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
   <diagram id="qzznC9PKPOXKTd3l4VVD" name="Done">
-    <mxGraphModel dx="1042" dy="626" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2084" dy="1252" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="78s0ozwHwOO_c_feOSM8-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="78s0ozwHwOO_c_feOSM8-2" target="78s0ozwHwOO_c_feOSM8-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="78s0ozwHwOO_c_feOSM8-2" value="Data Load" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e51400;fontColor=#ffffff;strokeColor=#B20000;" vertex="1" parent="1">
+          <mxGeometry x="160" y="280" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="78s0ozwHwOO_c_feOSM8-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="78s0ozwHwOO_c_feOSM8-4" target="78s0ozwHwOO_c_feOSM8-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="78s0ozwHwOO_c_feOSM8-4" value="Improving the logs" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#76608a;fontColor=#ffffff;strokeColor=#432D57;" vertex="1" parent="1">
+          <mxGeometry x="160" y="430" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="78s0ozwHwOO_c_feOSM8-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="78s0ozwHwOO_c_feOSM8-6" target="78s0ozwHwOO_c_feOSM8-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="78s0ozwHwOO_c_feOSM8-6" value="Add how many rows are being inserted on table. Now I don&#39;t have this information due to ignorance." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#6d8764;fontColor=#ffffff;strokeColor=#3A5431;" vertex="1" parent="1">
+          <mxGeometry x="125" y="570" width="310" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="78s0ozwHwOO_c_feOSM8-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="78s0ozwHwOO_c_feOSM8-8" target="78s0ozwHwOO_c_feOSM8-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="78s0ozwHwOO_c_feOSM8-8" value="Logic was implemented on the &quot;main&quot; file on load. All I need to do is creating the image and container again." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f0a30a;fontColor=#000000;strokeColor=#BD7000;" vertex="1" parent="1">
+          <mxGeometry x="100" y="700" width="360" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="78s0ozwHwOO_c_feOSM8-9" value="" style="sketch=0;html=1;aspect=fixed;strokeColor=none;shadow=0;align=center;fillColor=#2D9C5E;verticalAlign=top;labelPosition=center;verticalLabelPosition=bottom;shape=mxgraph.gcp2.check" vertex="1" parent="1">
+          <mxGeometry x="248.75" y="800" width="62.5" height="50" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
