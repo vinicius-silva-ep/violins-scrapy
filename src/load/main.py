@@ -24,16 +24,18 @@ connection_string = f"cockroachdb+psycopg2://{postgres_user}:{pwd}@{postgres_hos
 
 
 def load_and_insert_data():
+    # Transform the data. Kept outside the try below so that a failure in the
+    # collect or transform step is not relogged here as an insert error, and so
+    # the "Inserting data..." line is only written once there is data to insert.
+    df = transform_data()
+
+    engine = create_engine(connection_string)
+
     try:
         logger.info(
             "Inserting data into table...",
             extra={"table": "violins", "step": "load"},
         )
-
-        engine = create_engine(connection_string)
-
-        # Transform the data
-        df = transform_data()
 
         # Get the number of records to be inserted
         num_records = len(df)
@@ -54,7 +56,10 @@ def load_and_insert_data():
 
     except Exception as e:
         logger.error(
-            f"Error inserting data: {e}",
+            f"Error inserting data: {e!r}",
             extra={"table": "violins", "step": "load"},
+            exc_info=True,
         )
         raise
+    finally:
+        engine.dispose()

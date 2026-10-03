@@ -14,34 +14,34 @@ def main():
     try:
         logger.info(
             "Starting database operations...",
-            extra={"table": "your_table_name", "step": "general ETL"},
+            extra={"table": "violins", "step": "general ETL"},
         )
         db_operations()
         logger.info(
             "Database operations completed successfully.",
-            extra={"table": "your_table_name", "step": "general ETL"},
+            extra={"table": "violins", "step": "general ETL"},
         )
     except Exception as e:
         logger.error(
-            f"Error during database operations: {e}",
-            extra={"table": "your_table_name", "step": "general ETL"},
+            f"Error during database operations: {e!r}",
+            extra={"table": "violins", "step": "general ETL"},
         )
         return
 
     try:
         logger.info(
             "Starting data load and insert...",
-            extra={"table": "your_table_name", "step": "general ETL"},
+            extra={"table": "violins", "step": "general ETL"},
         )
         load_and_insert_data()
         logger.info(
             "Data load and insert completed successfully.",
-            extra={"table": "your_table_name", "step": "general ETL"},
+            extra={"table": "violins", "step": "general ETL"},
         )
     except Exception as e:
         logger.error(
-            f"Error during data load and insert: {e}",
-            extra={"table": "your_table_name", "step": "general ETL"},
+            f"Error during data load and insert: {e!r}",
+            extra={"table": "violins", "step": "general ETL"},
         )
         return
 

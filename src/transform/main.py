@@ -12,7 +12,22 @@ from logger import setup_logger
 logger = setup_logger()
 
 
-def extract_stock_number(stock_value: str) -> int:
+# Columns the spider is expected to yield. Checked up front so a broken or
+# empty collect step names what is missing instead of raising a bare KeyError
+# on whichever column the cleaning functions happen to touch first.
+EXPECTED_COLUMNS = (
+    "name",
+    "price",
+    "average_rating",
+    "number_of_reviews",
+    "stock",
+    "description",
+    "image",
+    "category",
+)
+
+
+def extract_stock_number(stock_value: pd.Series) -> pd.Series:
     match = pd.Series(stock_value).str.extract(r"(\d+)")[0]
     return pd.to_numeric(match, errors="coerce").fillna(0).astype(int)
 
@@ -47,6 +62,14 @@ def transform_data() -> pd.DataFrame:
         data = run_spider()
 
         df = pd.DataFrame(data)
+
+        missing = [column for column in EXPECTED_COLUMNS if column not in df.columns]
+        if missing:
+            raise ValueError(
+                f"Collected data is missing the columns {missing}. "
+                f"Got {list(df.columns)} with {len(df)} rows."
+            )
+
         df["date"] = datetime.now().strftime(
             "%Y-%m-%d %H:%M:%S"
         )  # Date format by ISO 8601 compatible with PostgreSQL
@@ -54,13 +77,17 @@ def transform_data() -> pd.DataFrame:
         df = clean_price(df)
         df = clean_numerical_columns(df)
 
-        df["stock"] = df["stock"].apply(extract_stock_number)
+        df["stock"] = extract_stock_number(df["stock"])
 
-        print(df)
+        logger.info(
+            f"Transformed {len(df)} rows",
+            extra={"table": "violins", "step": "transform"},
+        )
         return df
     except Exception as e:
         logger.error(
-            f"Error during data transformation: {e}",
+            f"Error during data transformation: {e!r}",
             extra={"table": "violins", "step": "transform"},
+            exc_info=True,
         )
-        raise    
+        raise

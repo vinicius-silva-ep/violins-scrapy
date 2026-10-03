@@ -19,16 +19,18 @@ NEWSPIDER_MODULE = "collect.spiders"
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
 
-# Configure maximum concurrent requests performed by Scrapy (default: 16)
-# CONCURRENT_REQUESTS = 32
-
-# Configure a delay for requests for the same website (default: 0)
-# See https://docs.scrapy.org/en/latest/topics/settings.html#download-delay
-# See also autothrottle settings and docs
-# DOWNLOAD_DELAY = 3
-# The download delay setting will honor only one of:
-# CONCURRENT_REQUESTS_PER_DOMAIN = 16
-# CONCURRENT_REQUESTS_PER_IP = 16
+# The store runs on Shopify, which rate-limits per IP. The start URLs were
+# being fired all at once with no delay, and the retries turned that into a
+# burst of 21 requests in under a second: every one came back 429 and the
+# crawl collected nothing.
+#
+# Measured on 2026-10-03: 6 requests spaced 10s apart all returned 200, while
+# 2s apart returned 429. AutoThrottle below adjusts to response latency, not
+# to 429s (a 429 answers fast, which would make it speed up), so this delay
+# is the floor that actually keeps the crawl inside the limit.
+CONCURRENT_REQUESTS = 1
+CONCURRENT_REQUESTS_PER_DOMAIN = 1
+DOWNLOAD_DELAY = 10
 
 # Disable cookies (enabled by default)
 # COOKIES_ENABLED = False
@@ -66,18 +68,26 @@ ROBOTSTXT_OBEY = True
 #    "collect.pipelines.CollectPipeline": 300,
 # }
 
+# 429 is already part of Scrapy's default RETRY_HTTP_CODES, so the retries did
+# happen. The problem was that all 3 attempts landed inside the same closed
+# window, with nothing spacing them out. More attempts, spread by the delay
+# above, survive a short-lived block.
+RETRY_TIMES = 5
+
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
-# AUTOTHROTTLE_ENABLED = True
+# Backs off on its own when the server gets slower, which is the part a fixed
+# DOWNLOAD_DELAY cannot do.
+AUTOTHROTTLE_ENABLED = True
 # The initial download delay
-# AUTOTHROTTLE_START_DELAY = 5
+AUTOTHROTTLE_START_DELAY = 10
 # The maximum download delay to be set in case of high latencies
-# AUTOTHROTTLE_MAX_DELAY = 60
+AUTOTHROTTLE_MAX_DELAY = 120
 # The average number of requests Scrapy should be sending in parallel to
 # each remote server
-# AUTOTHROTTLE_TARGET_CONCURRENCY = 1.0
+AUTOTHROTTLE_TARGET_CONCURRENCY = 1.0
 # Enable showing throttling stats for every response received:
-# AUTOTHROTTLE_DEBUG = False
+AUTOTHROTTLE_DEBUG = False
 
 # Enable and configure HTTP caching (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
